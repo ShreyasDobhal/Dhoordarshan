@@ -19,10 +19,15 @@ To get the packages from requirements.txt
 pip install -r /path/to/requirements.txt
 ```
 
-Other packages
+Setup a virtual camera
 ```
 sudo apt install v4l2loopback-dkms
-sudo modprobe v4l2loopback devices=1
-v4l2-ctl --list-devices -d4 # it should NOT say 'Cannot open device /dev/video4'
-# Set the (same) device for pyvirtualwebcam
+sudo modprobe -r v4l2loopback
+sudo modprobe v4l2loopback devices=1 video_nr=20 card_label="v4l2loopback" exclusive_caps=1
+```
+
+Download webdrivers and add to PATH
+```
+echo 'export PATH="$HOME/Documents/Python/ChromeDriver:$PATH"' >> ~/.profile
+source ~/.profile
 ```

@@ -4,8 +4,7 @@ import cv2
 import mediapipe as mp
 import time
 import numpy as np
-from utils import get_camera_indexes
-import math
+from utils import get_camera_indexes, math_dist
 
 tip_indexes = [4, 8, 12, 16, 20]
 palm_points = [0, 5, 9, 13, 17]
@@ -24,7 +23,6 @@ class handDetector():
             min_detection_confidence=self.detection_confidence,
             min_tracking_confidence=self.track_confidence
         )
-        # self.hands = self.mpHands.Hands()
         self.mpDraw = mp.solutions.drawing_utils
 
     def findHands(self, img, draw=True):
@@ -46,7 +44,6 @@ class handDetector():
 
 
             for id, lm in enumerate(myHand.landmark):
-                # print(id, lm)
                 h, w, c = img.shape
                 cx, cy = int(lm.x * w), int(lm.y * h)
                 lmList.append([id, cx, cy])
@@ -72,11 +69,6 @@ class handDetector():
 
         if landmark_list:
             # Thumb
-            # print(tip_indexes)
-            # print(tip_indexes[0])
-            # # print(tip_indexes[0])
-            # print(landmark_list[tip_indexes[0]][1])
-            # print(landmark_list[tip_indexes[0] - 1][1])
             if landmark_list[tip_indexes[0]][1] > landmark_list[tip_indexes[0] - 1][1]:
                 fingers.append(1)
             else:
@@ -84,14 +76,13 @@ class handDetector():
             
             # Fingers
             for id in range(1, 5):
-                # if landmark_list[tip_indexes[id]][2] < landmark_list[tip_indexes[id] - 2][2]:
                 def get_point(id):
                     return landmark_list[id][1], landmark_list[id][2]
                 tip_point = get_point(tip_indexes[id])
                 base_point = get_point(tip_indexes[id] - 2)
                 wrist_point = get_point(0)
 
-                if math.dist(tip_point, wrist_point) > math.dist(base_point, wrist_point):
+                if math_dist(tip_point, wrist_point) > math_dist(base_point, wrist_point):
                     fingers.append(1)
                 else:
                     fingers.append(0)
