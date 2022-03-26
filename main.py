@@ -4,6 +4,7 @@ import pyfakewebcam
 from handTrackingModule import handDetector
 import numpy as np
 from utils import get_default_camera
+from FastCapture import VideoCapture
 
 preview = True
 width = 640
@@ -16,7 +17,8 @@ if camera_index is None:
     print('No camera found')
     exit()
 
-cap = cv2.VideoCapture(camera_index)
+# cap = cv2.VideoCapture(camera_index)
+cap = VideoCapture(camera_index)
 detector = handDetector(max_hands=1)
 
 pTime = 0
@@ -74,5 +76,4 @@ while True:
     if cv2.waitKey(1) == 27:
         break # Esc
 
-cap.release()
 cv2.destroyAllWindows()
