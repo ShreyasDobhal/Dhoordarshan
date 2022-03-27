@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from utils import get_meeting_id
+from utils import get_googlemeet_url
 import time
 
 
@@ -68,6 +68,6 @@ def AskToJoin():
 # driver.maximize_window()
 # driver.get("https://google.com")
 
-driver.get(f"https://meet.google.com/{get_meeting_id()}")
+driver.get(f"https://meet.google.com/{get_googlemeet_url()}")
 turnOffMicCam()
 AskToJoin()

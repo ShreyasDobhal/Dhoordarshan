@@ -1,5 +1,5 @@
 from selenium import webdriver
-from utils import get_meeting_id
+from utils import get_googlemeet_url
 
 # driver = webdriver.Firefox()
 driver = webdriver.Chrome()
